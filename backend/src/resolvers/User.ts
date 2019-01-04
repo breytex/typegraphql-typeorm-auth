@@ -4,12 +4,12 @@ import  { UserInput, User } from "../entity/User";
 export class UserResolver{
   @Query(returns => User)
   async user(@Arg("id") id: string) {
-    throw Error("not implemented yet")
+    return await User.findOne({id})
   }
   
   @Mutation(returns => User)
   async addUser(@Arg("user") { email }: UserInput){
-    const user = await User.create({ email })
+    const user = await User.create({ email})
     console.log(user)
     return user
   }

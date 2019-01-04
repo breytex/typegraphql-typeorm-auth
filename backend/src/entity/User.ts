@@ -1,22 +1,21 @@
 import { ObjectType,InputType, Field, ID } from 'type-graphql'
 import { MaxLength, IsEmail } from 'class-validator'
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, BaseEntity } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, BaseEntity, Generated } from "typeorm"
 
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
     @Field(type => ID)
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn("uuid")
     id: string
     
     @Field()
     @Column()
-    // @IsEmail()
+    @IsEmail()
     email: string
     
     @Field()
-    @Column()
-    // @CreateDateColumn({type: "timestamp"})
+    @CreateDateColumn({ type: "timestamp" })
     createdAt: Date
 }
 

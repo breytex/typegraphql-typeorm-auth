@@ -1,13 +1,15 @@
+import { User } from './src/entity/User';
+import "reflect-metadata"
 import { createTypeormConn } from './src/typeormConnection';
 import { GraphQLServer } from 'graphql-yoga'
-import "reflect-metadata"
 import { buildSchema } from 'type-graphql';
 import { resolvers } from './src/resolvers'
 import { createConnection, Connection } from "typeorm"
 
 (async () => {
 
-  await createTypeormConn()
+  const connection = await createTypeormConn()
+  User.useConnection(connection)
   console.log("bla")
   const schema = await buildSchema({
     resolvers: resolvers
