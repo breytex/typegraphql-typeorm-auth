@@ -10,11 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^10.12.18",
     "graphql-yoga": "^1.16.9",
+    "mysql": "^2.16.0",
     "nodemon": "^1.18.9",
     "reflect-metadata": "^0.1.12",
     "ts-node": "^7.0.1",
     "type-graphql": "^0.16.0",
+    "typeorm": "^0.2.11",
     "typescript": "^3.2.2"
   },
   "devDependencies": {

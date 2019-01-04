@@ -1,0 +1,35 @@
+[
+    {
+      "name": "development",
+      "type": "mysql",
+      "host": "mysql",
+      "port": 3306,
+      "username": "root",
+      "password": "mysql",
+      "database": "typeorm",
+      "synchronize": true,
+      "logging": false,
+      "entities": ["src/entity/**/*.*"],
+      "migrations": ["src/migration/**/*.*"],
+      "subscribers": ["src/subscriber/**/*.*"],
+      "cli": {
+        "entitiesDir": "src/entity",
+        "migrationsDir": "src/migration",
+        "subscribersDir": "src/subscriber"
+      }
+    },
+    {
+      "name": "production",
+      "type": "postgres",
+      "host": "db",
+      "port": 5432,
+      "username": "postgres",
+      "password": "postgres",
+      "database": "codeponder",
+      "synchronize": false,
+      "logging": false,
+      "entities": ["dist/entity/**/*.*"],
+      "migrations": ["dist/migration/**/*.*"],
+      "subscribers": ["dist/subscriber/**/*.*"]
+    }
+  ]
