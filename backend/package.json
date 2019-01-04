@@ -12,7 +12,12 @@
   "dependencies": {
     "graphql-yoga": "^1.16.9",
     "nodemon": "^1.18.9",
+    "reflect-metadata": "^0.1.12",
     "ts-node": "^7.0.1",
+    "type-graphql": "^0.16.0",
     "typescript": "^3.2.2"
+  },
+  "devDependencies": {
+    "tslint": "^5.12.0"
   }
 }

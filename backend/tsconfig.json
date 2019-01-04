@@ -4,6 +4,11 @@
     "outDir": "dist",
     "strict": false,
     "strictNullChecks": false,
-    "lib": ["esnext", "dom"]
-  }
+    "lib": ["esnext", "dom", "es2016", "esnext.asynciterable"],
+    "module": "commonjs",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es2016" 
+  },
+
 }
