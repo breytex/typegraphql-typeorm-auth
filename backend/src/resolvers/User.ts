@@ -9,8 +9,8 @@ export class UserResolver{
   
   @Mutation(returns => User)
   async addUser(@Arg("user") { email }: UserInput){
-    const user = await User.create({ email})
-    console.log(user)
+    const user = User.create({ email })
+    await user.save()
     return user
   }
 }

@@ -8,9 +8,8 @@ import { createConnection, Connection } from "typeorm"
 
 (async () => {
 
-  const connection = await createTypeormConn()
-  User.useConnection(connection)
-  console.log("bla")
+  await createTypeormConn()
+  
   const schema = await buildSchema({
     resolvers: resolvers
   })
