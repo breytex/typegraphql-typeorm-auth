@@ -53,8 +53,9 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./data/mysql:/var/lib/mysql
+      - mysqldata:/var/lib/mysql
 
 volumes:
   frontendmodules:
   backendmodules:
+  mysqldata:
