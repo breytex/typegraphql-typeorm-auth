@@ -9,7 +9,7 @@ import { createTypeormConn } from './src/typeormConnection'
 (async () => {
 
   await createTypeormConn()
-  
+
   const schema = await buildSchema({
     resolvers
   })
@@ -17,20 +17,20 @@ import { createTypeormConn } from './src/typeormConnection'
   const server = new GraphQLServer({
     schema,
     resolvers,
-    debug: true, 
+    debug: true,
   } as any)
-  
-  const opts = { 
+
+  const opts = {
     port: 4000,
     endpoint: '/api',
     subscriptions: '/api/subscriptions',
     playground: '/api/playground',
   }
-  
+
   server.express.enable('trust proxy')
-  
-  
+
+
   server.start(opts, () => console.log('Server is running on http://localhost:4000'))
 
-})().catch(e =>{ console.error(e)})
+})().catch(e => { console.error(e) })
 

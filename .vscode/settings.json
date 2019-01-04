@@ -1,5 +1,6 @@
 {
     "tslint.enable": true,
     "tslint.run": "onType",
-    "tslint.autoFixOnSave": true
+    "tslint.autoFixOnSave": true,
+    "editor.formatOnSave": true
 }
