@@ -1,0 +1,13 @@
+FROM node:11 as build
+
+EXPOSE 4000
+
+ADD ./backend/package.json /src/package.json
+
+WORKDIR /src
+
+
+RUN npm i
+RUN npm i -g typescript
+RUN npm i -g ts-node
+RUN npm i -g graphql-cli

@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "outDir": "dist",
+    "strict": false,
+    "strictNullChecks": false,
+    "lib": ["esnext", "dom"]
+  }
+}

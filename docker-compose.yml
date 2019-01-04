@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/DockerfileBackend
+    command: npm run dockerstart
+    restart: unless-stopped
+    environment:
+     - NODE_ENV=development
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend:/src
+      - ./data/log:/var/log:rw
+      - backendmodules:/src/node_modules
+    # links:
+    #   # - prisma
+    # depends_on:
+    #   # - prisma
+
+  nginx:
+    image: nginx:1.12.2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - FRONTEND_PORT=3000  # development
+    volumes:
+      - ./config/nginx/backend.conf:/etc/nginx/conf.d/default.conf
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./config/nginx/.htpasswd:/etc/nginx/.htpasswd
+      - ./config/nginx/ssl:/etc/ssl
+      - ./data/log:/var/log/nginx/:rw
+      - ./data/media:/var/www/media/:rw
+    links:
+      # - frontend
+      - backend
+    depends_on:
+      # - frontend
+      - backend
+
+  mysql:
+    #image: docker-registry.dglecom.net/percona:5.6
+    image: percona:5.6
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: typeorm
+      MYSQL_USER: root
+      MYSQL_PASSWORD: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+
+volumes:
+  frontendmodules:
+  backendmodules:
