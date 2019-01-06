@@ -12,5 +12,9 @@
     "import-sources-order": "any",
     "no-console": false,
     "object-literal-sort-keys": false,
+    "member-access": false,
+    "max-classes-per-file": false,
+    "interface-name": false,
+    "ban-types": false
   }
 }
