@@ -1,4 +1,5 @@
-import { Arg, Mutation, Query } from "type-graphql"
+import { Context } from 'graphql-yoga/dist/types'
+import { Arg, Ctx, Mutation, Query } from "type-graphql"
 import { User, UserInput } from "../entity/User"
 import { checkIfNotExpired } from "../helpers/date"
 import log from "../helpers/log"
@@ -6,9 +7,8 @@ import { Login, Session } from './../entity/Session'
 
 export class SessionResolver {
     @Query(returns => User)
-    async loggedinUser() {
-        // return await User.findOne({ id })
-        throw new Error("not implemented")
+    async loggedinUser(@Ctx() { request }: Context) {
+        return request.user
     }
 
     @Mutation(returns => Boolean)
@@ -34,20 +34,20 @@ export class SessionResolver {
     }
 
     @Mutation(returns => String)
-    async signIn(@Arg("token") token: string, ...params) {
-        console.log(params)
-        const login: Login = await Login.findOne({ token })
+    async signIn(@Arg("token") token: string, @Ctx() { response }: Context) {
+        const login: Login = await Login.findOne({ token }, { relations: ["user"] })
         if (login && checkIfNotExpired(login.createdAt, 10)) {
             const user: User = login.user
             const oldLogins = await Login.find({ where: { user } })
-            await Login.remove(oldLogins)
+            oldLogins.forEach(async e => { await e.remove() })
 
             let session = await Session.create({ user })
             session = await session.save()
-            // response.cookie('freelancertoolsSession', session.token, { maxAge: 2592000, httpOnly: false })
+            response.cookie('freelancertoolsSession', session.token, { maxAge: 2592000, httpOnly: false })
             return session.token
         } else {
             throw new Error("invalid-token")
         }
     }
+
 }
