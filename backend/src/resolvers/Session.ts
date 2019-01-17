@@ -4,11 +4,14 @@ import { User, UserInput } from "../entity/User"
 import { checkIfNotExpired } from "../helpers/date"
 import log from "../helpers/log"
 import { Login, Session } from './../entity/Session'
+import { MyContext } from './../types'
 
 export class SessionResolver {
     @Query(returns => User)
-    async loggedinUser(@Ctx() { request }: Context) {
-        return request.user
+    async loggedinUser(@Ctx() { user }: MyContext) {
+        console.log("context user")
+        console.log(user)
+        return user
     }
 
     @Mutation(returns => Boolean)
@@ -34,7 +37,7 @@ export class SessionResolver {
     }
 
     @Mutation(returns => String)
-    async signIn(@Arg("token") token: string, @Ctx() { response }: Context) {
+    async signIn(@Arg("token") token: string, @Ctx() { response }: MyContext) {
         const login: Login = await Login.findOne({ token }, { relations: ["user"] })
         if (login && checkIfNotExpired(login.createdAt, 10)) {
             const user: User = login.user

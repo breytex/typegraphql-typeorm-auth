@@ -1,28 +1,30 @@
 import cookieParser = require('cookie-parser')
-import { Request, Response } from 'express'
 import { GraphQLServer } from 'graphql-yoga'
 import { Context } from 'graphql-yoga/dist/types'
 import "reflect-metadata"
 import { buildSchema } from 'type-graphql'
-import { Connection, createConnection } from "typeorm"
-import { User } from './src/entity/User'
-import cookieAuth from './src/middlewares/cookieAuth'
+import { authChecker } from './src/functions/authChecker'
+import { CookieAuthMiddleware } from './src/middlewares/cookieAuth'
 import { resolvers } from './src/resolvers'
 import { createTypeormConn } from './src/typeormConnection'
-import { Context as MyContext } from './src/types'
+import { MyContext } from './src/types'
+
 (async () => {
 
   await createTypeormConn()
 
   const schema = await buildSchema({
     resolvers,
+    authChecker,
+    globalMiddlewares: [CookieAuthMiddleware]
   })
 
   const server = new GraphQLServer({
     context: ({ response, request }: Context): MyContext => {
       return {
         response,
-        request
+        request,
+        user: null
       }
     },
     schema,
@@ -40,7 +42,6 @@ import { Context as MyContext } from './src/types'
   server.express.enable('trust proxy')
 
   server.express.use(cookieParser())
-  server.express.use(cookieAuth)
 
   server.start(opts, () => console.log('Server is running on http://localhost:4000'))
 

@@ -8,7 +8,8 @@ declare module 'express' {
     }
 }
 
-export interface Context {
+export interface MyContext {
     request: Request
     response: Response
+    user?: User
 }
