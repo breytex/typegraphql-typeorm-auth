@@ -5,12 +5,6 @@ This repository holds a very basic implementation of (medium-like) authenticatio
 * [typeorm](https://github.com/typeorm/typeorm)
 * docker
 
-# Warning
-Currently, this stack has a security issue. 
-Read: https://github.com/19majkel94/type-graphql/issues/230
-Unfortunatly, I am unable to fix that for now.
-The underlaying problem will be resolved with the next type-graphql major version.
-
 # Install
 Install [docker](https://www.docker.com/) on your machine.
 

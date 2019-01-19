@@ -12,5 +12,4 @@ export interface MyContext {
     request: Request
     response: Response
     user?: User
-    public: boolean
 } 

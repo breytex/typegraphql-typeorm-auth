@@ -4,7 +4,6 @@ import { Context } from 'graphql-yoga/dist/types'
 import "reflect-metadata"
 import { buildSchema } from 'type-graphql'
 import { authChecker } from './src/guards/authChecker'
-import { CookieAuthMiddleware } from './src/middlewares/cookieAuth'
 import { resolvers } from './src/resolvers'
 import { createTypeormConn } from './src/typeormConnection'
 import { MyContext } from './src/types'
@@ -16,7 +15,6 @@ import { MyContext } from './src/types'
   const schema = await buildSchema({
     resolvers,
     authChecker,
-    globalMiddlewares: [CookieAuthMiddleware]
   })
 
   const server = new GraphQLServer({
@@ -25,7 +23,6 @@ import { MyContext } from './src/types'
         response,
         request,
         user: null,
-        public: false
       }
     },
     schema,
