@@ -1,20 +1,21 @@
 
 import { createConnection, getConnectionOptions } from "typeorm"
+import log from "./helpers/log"
 
 export const createTypeormConn = async () => {
-  let retries = 5;
+  let retries = 5
   while (retries) {
     try {
       const options = await getConnectionOptions(process.env.NODE_ENV)
-      return createConnection({...options, name:"default"});
+      return createConnection({ ...options, name: "default" })
     } catch (err) {
-      console.log(err);
-      retries -= 1;
-      console.log(`retries left: ${retries}`);
+      log(err)
+      retries -= 1
+      log(`retries left: ${retries}`)
       // wait 5 seconds
-      await new Promise(res => setTimeout(res, 5000));
+      await new Promise(res => setTimeout(res, 5000))
     }
   }
 
-  return null;
-};
+  return null
+}

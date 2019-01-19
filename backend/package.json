@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dockerstart": "nodemon -x ts-node --no-cache index.ts"
+    "dockerstart": "ts-node-dev --respawn index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -14,7 +14,7 @@
     "cookie-parser": "^1.4.3",
     "graphql-yoga": "^1.16.9",
     "mysql": "^2.16.0",
-    "nodemon": "^1.18.9",
+    "ts-node-dev": "^1.0.0-pre.32",
     "reflect-metadata": "^0.1.12",
     "ts-node": "^7.0.1",
     "tslint-config-prettier": "^1.17.0",

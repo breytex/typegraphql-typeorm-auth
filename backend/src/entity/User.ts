@@ -1,6 +1,6 @@
 import { IsEmail, MaxLength } from 'class-validator'
 import { Field, ID, InputType, ObjectType } from 'type-graphql'
-import { Column, Entity } from "typeorm"
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm"
 import { MyEntity } from './Entity'
 
 @ObjectType()
@@ -17,4 +17,10 @@ export class UserInput {
     @Field()
     @MaxLength(30)
     email: string
+}
+
+export abstract class OwnerEntity extends MyEntity {
+    @ManyToOne(type => User)
+    @JoinColumn()
+    user: User
 }

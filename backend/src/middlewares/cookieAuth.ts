@@ -31,6 +31,11 @@ export class CookieAuthMiddleware implements MiddlewareInterface<MyContext> {
             context.user = null
             log("no cookie in request")
         }
-        await next()
+
+        if (context.public || context.user) {
+            await next()
+        } else {
+            throw Error("accessDenied")
+        }
     }
 }

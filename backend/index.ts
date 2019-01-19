@@ -3,7 +3,7 @@ import { GraphQLServer } from 'graphql-yoga'
 import { Context } from 'graphql-yoga/dist/types'
 import "reflect-metadata"
 import { buildSchema } from 'type-graphql'
-import { authChecker } from './src/functions/authChecker'
+import { authChecker } from './src/guards/authChecker'
 import { CookieAuthMiddleware } from './src/middlewares/cookieAuth'
 import { resolvers } from './src/resolvers'
 import { createTypeormConn } from './src/typeormConnection'
@@ -24,7 +24,8 @@ import { MyContext } from './src/types'
       return {
         response,
         request,
-        user: null
+        user: null,
+        public: false
       }
     },
     schema,

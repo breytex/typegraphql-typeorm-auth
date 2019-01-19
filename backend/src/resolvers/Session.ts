@@ -1,23 +1,26 @@
 import { Context } from 'graphql-yoga/dist/types'
-import { Arg, Ctx, Mutation, Query } from "type-graphql"
+import { Arg, Authorized, Ctx, Mutation, Query } from "type-graphql"
 import { User, UserInput } from "../entity/User"
+import { Public } from '../guards/authChecker'
 import { checkIfNotExpired } from "../helpers/date"
 import log from "../helpers/log"
 import { Login, Session } from './../entity/Session'
 import { MyContext } from './../types'
 
 export class SessionResolver {
+    @Public()
     @Query(returns => User)
     async loggedinUser(@Ctx() { user }: MyContext) {
-        console.log("context user")
-        console.log(user)
+        if (!user) {
+            throw Error("noUserLoggedin")
+        }
         return user
     }
 
+    @Public()
     @Mutation(returns => Boolean)
     async requestSignIn(@Arg("user") { email }: UserInput) {
         let user: User = await User.findOne({ where: { email } })
-        console.log(user)
         // create user if not existent
         if (!user) {
             user = User.create({ email })
@@ -36,6 +39,7 @@ export class SessionResolver {
         return true
     }
 
+    @Public()
     @Mutation(returns => String)
     async signIn(@Arg("token") token: string, @Ctx() { response }: MyContext) {
         const login: Login = await Login.findOne({ token }, { relations: ["user"] })
@@ -51,6 +55,17 @@ export class SessionResolver {
         } else {
             throw new Error("invalid-token")
         }
+    }
+
+    @Mutation(returns => Boolean)
+    async logout(@Ctx() { request, response, user }: MyContext) {
+        if (user) {
+            const token = request.cookies.freelancertoolsSession
+            Session.remove(await Session.findOne({ token }))
+            response.clearCookie('freelancertoolsSession')
+            return true
+        }
+        return false
     }
 
 }
