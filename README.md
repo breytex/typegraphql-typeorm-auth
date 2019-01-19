@@ -41,14 +41,14 @@ visit [localhost/api/playground](http://localhost/api/playground)
 Run the following sequence of graphql queries and mutations to test:
 
 First, we make sure that we **don't** have access to creating a todo:
-```javascript
+```graphql
 mutation{
     createTodo(text:"foo")
 }
 ```
 this should output: `"message": "accessDenied"`. Next, we create an account or request login to an already existing account by:
  
-```javascript
+```graphql
 mutation{
     requestSignIn(user:{email:"test@test.com"})
 }
@@ -60,25 +60,25 @@ backend_1  | 55dd4e34-b3ca-4da2-8edc-db5064ad9079
 ```
 in production, the printed token is sent to the user via email. Run the following for a test sign-in
 
-```javascript
+```graphql
 mutation{
     signIn(token:"55dd4e34-b3ca-4da2-8edc-db5064ad9079")
 }
 ```
 The server replies with a cookie. You can test the login status with:
-```
+```graphql
 query{
   loggedinUser{email}
 }
 ```
 or simply create a todo again;
-```javascript
+```graphql
 mutation{
     createTodo(text:"foo")
 }
 ```
 followed by listing all todos of the logged-in user:
-```javascript
+```graphql
 query{
     todos{text}
 }
