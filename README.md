@@ -3,6 +3,7 @@
 This repository holds a very basic implementation of (medium-like) authentication based on 
 * [type-graphql](https://github.com/19majkel94/type-graphql)
 * [typeorm](https://github.com/typeorm/typeorm)
+* Project structure and jest resolver testing is heavily inspired by Ben Awad [type-graphql-series](https://github.com/benawad/type-graphql-series). Thanks!
 * docker
 
 # Install
