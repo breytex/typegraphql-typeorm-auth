@@ -1,4 +1,4 @@
-import { checkIfNotExpired } from "../helpers/date"
+import { checkIfNotExpired } from "./date"
 
 
 test('checkIfNotExpiredFunction', () => {

@@ -42,18 +42,16 @@ services:
       - backend
 
   mysql:
-    #image: docker-registry.dglecom.net/percona:5.6
-    image: percona:5.6
+    image: mysql:5.7
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: mysql
-      MYSQL_DATABASE: typeorm
-      MYSQL_USER: root
-      MYSQL_PASSWORD: mysql
     ports:
       - "3306:3306"
     volumes:
       - mysqldata:/var/lib/mysql
+      - ./data/mysqlSchemas:/docker-entrypoint-initdb.d
 
 volumes:
   frontendmodules:

@@ -2,20 +2,17 @@ import cookieParser = require('cookie-parser')
 import { GraphQLServer } from 'graphql-yoga'
 import { Context } from 'graphql-yoga/dist/types'
 import "reflect-metadata"
-import { buildSchema } from 'type-graphql'
-import { authChecker } from './src/guards/authChecker'
+
+
 import { resolvers } from './src/resolvers'
 import { createTypeormConn } from './src/typeormConnection'
 import { MyContext } from './src/types'
+import { createSchema } from './src/utils/createSchema'
 
 (async () => {
 
   await createTypeormConn()
-
-  const schema = await buildSchema({
-    resolvers,
-    authChecker,
-  })
+  const schema = await createSchema()
 
   const server = new GraphQLServer({
     context: ({ response, request }: Context): MyContext => {

@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "dockerstart": "ts-node-dev --respawn index.ts"
+    "dockerstart": "ts-node-dev --respawn index.ts",
+    "db:setup": "ts-node ./src/test-utils/setup.ts",
+    "test": "npm run db:setup && jest"
   },
   "author": "",
   "license": "ISC",
@@ -14,9 +15,9 @@
     "cookie-parser": "^1.4.3",
     "graphql-yoga": "^1.16.9",
     "mysql": "^2.16.0",
-    "ts-node-dev": "^1.0.0-pre.32",
     "reflect-metadata": "^0.1.12",
     "ts-node": "^7.0.1",
+    "ts-node-dev": "^1.0.0-pre.32",
     "tslint-config-prettier": "^1.17.0",
     "type-graphql": "^0.16.0",
     "typedi": "^0.8.0",
@@ -24,7 +25,9 @@
     "typescript": "^3.2.2"
   },
   "devDependencies": {
+    "@types/faker": "^4.1.5",
     "@types/jest": "^23.3.13",
+    "faker": "^4.1.0",
     "jest": "^23.6.0",
     "ts-jest": "^23.10.5",
     "tslint": "^5.12.0"

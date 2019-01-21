@@ -1,4 +1,5 @@
-[{
+[
+  {
     "name": "development",
     "type": "mysql",
     "host": "mysql",
@@ -8,9 +9,15 @@
     "database": "typeorm",
     "synchronize": false,
     "logging": false,
-    "entities": ["src/entity/**/*.*"],
-    "migrations": ["src/migration/**/*.*"],
-    "subscribers": ["src/subscriber/**/*.*"],
+    "entities": [
+      "src/entity/**/*.*"
+    ],
+    "migrations": [
+      "src/migration/**/*.*"
+    ],
+    "subscribers": [
+      "src/subscriber/**/*.*"
+    ],
     "cli": {
       "entitiesDir": "src/entity",
       "migrationsDir": "src/migration",
@@ -27,8 +34,40 @@
     "database": "codeponder",
     "synchronize": false,
     "logging": false,
-    "entities": ["dist/entity/**/*.*"],
-    "migrations": ["dist/migration/**/*.*"],
-    "subscribers": ["dist/subscriber/**/*.*"]
+    "entities": [
+      "dist/entity/**/*.*"
+    ],
+    "migrations": [
+      "dist/migration/**/*.*"
+    ],
+    "subscribers": [
+      "dist/subscriber/**/*.*"
+    ]
+  },
+  {
+    "name": "testing",
+    "type": "mysql",
+    "host": "mysql",
+    "port": 3306,
+    "username": "root",
+    "password": "mysql",
+    "database": "typeorm_testing",
+    "synchronize": false,
+    "logging": false,
+    "dropSchema": false,
+    "entities": [
+      "src/entity/**/*.*"
+    ],
+    "migrations": [
+      "src/migration/**/*.*"
+    ],
+    "subscribers": [
+      "src/subscriber/**/*.*"
+    ],
+    "cli": {
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
+    }
   }
 ]
