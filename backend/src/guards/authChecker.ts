@@ -3,12 +3,13 @@ import { Session } from '../entity/Session'
 import { User } from '../entity/User'
 import log from '../helpers/log'
 import { MyContext } from "../types"
+import { SESSION_COOKIE_NAME } from './../resolvers/Session'
 
 // export const Public = () => Authorized("PUBLIC")
 
 export const authChecker: AuthChecker<MyContext> = async ({ context }, roles) => {
 
-    const cookie = context.request.cookies.freelancertoolsSession
+    const cookie = context.request.cookies[SESSION_COOKIE_NAME]
     if (cookie) {
         const session: Session = await Session.findOne({ token: cookie }, { relations: ["user"] })
         if (session) {

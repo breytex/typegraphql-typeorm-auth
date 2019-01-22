@@ -6,6 +6,7 @@ import log from "../helpers/log"
 import { Login, Session } from './../entity/Session'
 import { MyContext } from './../types'
 
+export const SESSION_COOKIE_NAME = "freelancertoolsSession"
 export class SessionResolver {
     @Authorized()
     @Query(returns => User)
@@ -47,7 +48,7 @@ export class SessionResolver {
 
             let session = await Session.create({ user })
             session = await session.save()
-            response.cookie('freelancertoolsSession', session.token, { maxAge: 2592000, httpOnly: false })
+            response.cookie(SESSION_COOKIE_NAME, session.token, { maxAge: 2592000, httpOnly: false })
             return session.token
         } else {
             throw new Error("invalid-token")
@@ -59,8 +60,8 @@ export class SessionResolver {
     async logout(@Ctx() { request, response, user }: MyContext) {
         if (user) {
             const token = request.cookies.freelancertoolsSession
-            Session.remove(await Session.findOne({ token }))
-            response.clearCookie('freelancertoolsSession')
+            Session.delete({ token })
+            response.clearCookie(SESSION_COOKIE_NAME)
             return true
         }
         return false

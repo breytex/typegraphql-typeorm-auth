@@ -1,5 +1,6 @@
 import { graphql, GraphQLSchema } from "graphql"
 import Maybe from "graphql/tsutils/Maybe"
+import { SESSION_COOKIE_NAME } from './../resolvers/Session'
 
 import { createSchema } from "../utils/createSchema"
 
@@ -9,11 +10,12 @@ interface Options {
     [key: string]: any;
   }>
   userId?: number
+  cookie?: string
 }
 
 let schema: GraphQLSchema
 
-export const gCall = async ({ source, variableValues, userId }: Options) => {
+export const gCall = async ({ source, variableValues, cookie }: Options) => {
   if (!schema) {
     schema = await createSchema()
   }
@@ -22,13 +24,12 @@ export const gCall = async ({ source, variableValues, userId }: Options) => {
     source,
     variableValues,
     contextValue: {
-      req: {
-        session: {
-          userId
-        }
+      request: {
+        cookies: { [SESSION_COOKIE_NAME]: cookie }
       },
-      res: {
-        clearCookie: jest.fn()
+      response: {
+        clearCookie: jest.fn(),
+        cookie: jest.fn()
       }
     }
   })
